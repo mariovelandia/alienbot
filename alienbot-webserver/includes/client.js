@@ -133,14 +133,16 @@ function mostrarGesto( gesto ) {
     // cuestionado / normal / pendinte / tierno / triste
     $('img.face').attr('src','includes/img/'+ gesto +'.png');
 }
+
 function imitateArtist(artist, data) {
     var iframeVideo = '';
     if( artist == 'bomba estereo'){
-        iframeVideo = '<iframe width="100%" height="465" src="https://www.youtube.com/embed/bxWxXncl53U?start=33&autoplay=1" frameborder="0" allowfullscreen></iframe>';
-    } else {
-        iframeVideo = '<h3>Ups.. Ese Artista no.. </h3>';
+        iframeVideo = '<iframe width="100%" height="465" src="https://www.youtube.com/embed/bxWxXncl53U?start=33&autoplay=1" frameborder="0" allowfullscreen></iframe>';        
+    } else {        
+        mostrarGesto('triste');
+        respond('Ups.. Ese Artista no..')
     }
-    respond('Tu lo has pedido');
+    respond('Tu lo has pedido');    
     setTimeout(function() {
         hideAllDivs();
         $('#video-container').html( iframeVideo ).slideDown();
@@ -151,6 +153,7 @@ function imitateArtist(artist, data) {
         respond('¿Te Gustó?');
         setTimeout(function() { prepareResponse(data); }, 1000);    
     }, 25000);
+    
 }
 
 function processResponse( data ){   
@@ -159,10 +162,10 @@ function processResponse( data ){
     // Imitar un artista
     console.log( parameters.given_name );
     if( action == 'general.greetings' && parameters.given_name != '' ){
+        mostrarGesto('pendiente');
         prepareResponse(data);
-        setTimeout(function() { takePhoto(); }, 2000);        
-    } else if( action == 'lineup.imitation' && parameters.stereopicnic_artistas != '' ){       
-        imitateArtist( parameters.stereopicnic_artistas, data );
+        setTimeout(function() { takePhoto(); }, 1500);        
+    } else if( action == 'lineup.imitation' && parameters.stereopicnic_artistas != '' ){imitateArtist( parameters.stereopicnic_artistas, data );
     } else {
         prepareResponse(data);
     }
