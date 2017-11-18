@@ -58,7 +58,7 @@ board.on('ready', function() {
     } else if( dir == 'up' ){      
       motorArm.reverse(250);  
     }
-    setTimeout(function() { motorArm.stop() }, 700);
+    setTimeout(function() { motorArm.stop() }, 2000);
   }
 
   // Leds Platillo
@@ -97,12 +97,15 @@ board.on('ready', function() {
          client.emit('escuchar'); 
          pendienteAEscuchar = false;
       }
-      console.log(this.value);
+      // console.log(this.value);
     });
     prSi.on('data', function(){
-      if( this.value < intencionDeEleccion && pendienteDeEleccion === true ){          
-         client.emit('respuesta','si'); 
-         pendienteDeEleccion = false;
+      // if( this.value < intencionDeEleccion && pendienteDeEleccion === true ){          
+      //    client.emit('respuesta','si'); 
+      //    pendienteDeEleccion = false;
+      // }
+      if( this.value < intencionDeEleccion ){          
+         client.emit('escuchar');         
       }
     });
     prNo.on('data', function(){
@@ -111,11 +114,11 @@ board.on('ready', function() {
          pendienteDeEleccion = false;
       }
     });
-    motio.on('motionstart',function() {
-      if( pendienteDeMovimiento === true){
-        moveArm('up');
-        client.emit('saludar');
-        pendienteDeMovimiento === false        
+    motion.on('motionstart',function() {
+      if( pendienteDeMovimiento === true ){
+        moveArm('down');
+        client.emit('respuesta','Hola Alien');
+        pendienteDeMovimiento = false;
       }      
     });
   });

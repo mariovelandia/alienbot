@@ -181,12 +181,13 @@ function socketEvents() {
     // Activar microfono
     socket.on('escuchar', function(){        
         console.log('Escuchando');
-        setTimeout(function() { $('#rec').click(); }, 2000);
+        $('#rec').click();
     });
     // Enviar Respuesta
     socket.on('respuesta', function(data){
         console.log('Respuesta Enviada');
         $('#speech').val( data );
-        send();
+        send(); 
+        setTimeout(function() { $('#rec').click(); $('#speech').val(''); }, 1500);
     });
 }

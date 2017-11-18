@@ -1,3 +1,4 @@
 node_modules/
 alienbot-arduino/node_modules/ipaddr.js/package.json
 *.json
+*.json
