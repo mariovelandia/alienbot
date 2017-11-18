@@ -172,15 +172,17 @@ function processResponse( data ){
 }
 
 function socketEvents() {
-    var socket = io.connect(window.location.hostname + ':' + 3000);
+    var socket = io.connect('http://localhost:' + 3000);
     // Validar conexión
     socket.on('connect', function(data) { socket.emit('join', 'Client esta conectado!'); });
     // Activar microfono
     socket.on('escuchar', function(){        
+        console.log('Escuchando');
         setTimeout(function() { $('#rec').click(); }, 2000);
     });
     // Enviar Respuesta
     socket.on('respuesta', function(data){
+        console.log('Respuesta Enviada');
         $('#speech').val( data );
         send();
     });

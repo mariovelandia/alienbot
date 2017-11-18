@@ -159,12 +159,13 @@ function displayDemographics(data, imgencode) {
 	$('#age span').html( ageAppearance ).slideDown();
 	$('#gender span').html( genderAppearance ).slideDown();
 	$('#etnic span').html( multiculturalAppearance ).slideDown();
-	
+			
 	respond('Mi instinto alienigena me dice que tienes alrededor de los '+ ageAppearance);
 	
 	if( genderAppearance == 'masculine' ){ var genderAppearanceTxt = 'hombre'; }
 	if( genderAppearance == 'feminine' ){ var genderAppearanceTxt = 'mujer'; }
 	
+	mostrarGesto('normal');
 	setTimeout(function() { respond('De seguro eres '+ genderAppearanceTxt); }, 3000);
 	
 	if( multiculturalAppearance == 'hispanic, latino, or spanish origin' ){ 
@@ -185,6 +186,7 @@ function displayDemographics(data, imgencode) {
 		delete_photo_btn.classList.add("disabled");
 		download_photo_btn.classList.add("disabled");        
 		setTimeout(function() {
+			mostrarGesto('triste');
 			respond('No te veo gordito suficiente. Ve y come arto');
 			video.play();
 			hideAllDivs();
@@ -208,10 +210,11 @@ function displayDemographics(data, imgencode) {
 }
 
 function displayGeneral(data) {  
+	mostrarGesto('cuestionando');
 	var allConcepts = 'Noto en ti: ';
 	var concepts = data.outputs[0].data.concepts;
 	for (var i = 0; i < concepts.length; i++) {
-	  if( concepts[i].value > 0.9 && concepts[i].name != 'undefined' && concepts[i].name != 'relación (relación)' ){	  	
+	  if( concepts[i].value > 0.9 && concepts[i].name != 'undefined' && concepts[i].name != 'pueblo' && concepts[i].name != 'relación (relación)' ){	  	
 	  	allConcepts += concepts[i].name + ', ';
 	  }
 	}
