@@ -54,9 +54,9 @@ board.on('ready', function() {
   }
   function moveArm( dir ){
     if( dir == 'down' ){       
-      motorArm.forward(50);
+      motorArm.forward(250);
     } else if( dir == 'up' ){      
-      motorArm.reverse(50);  
+      motorArm.reverse(250);  
     }
     setTimeout(function() { motorArm.stop() }, 700);
   }
@@ -110,6 +110,13 @@ board.on('ready', function() {
          client.emit('respuesta','no'); 
          pendienteDeEleccion = false;
       }
+    });
+    motio.on('motionstart',function() {
+      if( pendienteDeMovimiento === true){
+        moveArm('up');
+        client.emit('saludar');
+        pendienteDeMovimiento === false        
+      }      
     });
   });
 
