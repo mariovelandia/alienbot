@@ -25,7 +25,7 @@ board.on('ready', function() {
   // Crear Objetos - Asignación de pines
   var motorArm; motorArm = new five.Motor({ pins: { pwm: 11, dir: 9, cdir: 8 } });
   var motorHand; motorHand = new five.Motor({ pins: { pwm: 5, dir: 4, cdir: 3 } });
-  var prHiFive = new five.Sensor({ pin: "A14", freq: 250 });  
+  var prHiFive = new five.Sensor({ pin: "A11", freq: 250 });  
   var prSi = new five.Sensor({ pin: "A3", freq: 250 });  
   var prNo = new five.Sensor({ pin: "A5", freq: 250 });  
   var motion = new five.Motion(53);
@@ -81,24 +81,6 @@ board.on('ready', function() {
     pendienteDeEleccion = true;
   }
 
-  wantDecision();
-  // leds.on();
-
-
-  // prHiFive.on("data", function() { 
-  //   console.log('prHiFive');
-  //   console.log( this.value );
-  // });
-
-  // prNo.on("data", function() { 
-  //   console.log('prNo');
-  //   console.log( this.value );
-  // });
-  // prSi.on("data", function() { 
-  //   console.log('prSi');
-  //   console.log( this.value );
-  // });
-
   // Listen to the web socket connection
   io.on('connection', function(client) {    
     // Registrar conexión exitosa con el servidor
@@ -115,6 +97,7 @@ board.on('ready', function() {
          client.emit('escuchar'); 
          pendienteAEscuchar = false;
       }
+      console.log(this.value);
     });
     prSi.on('data', function(){
       if( this.value < intencionDeEleccion && pendienteDeEleccion === true ){          
@@ -135,20 +118,19 @@ board.on('ready', function() {
 const port = process.env.PORT || 3000;
 server.listen(port);
 
+// wantDecision();
+// leds.on();
 
-  // prHiFive.on("data", function() { 
-  //   console.log('prHiFive');
-  //   console.log( this.value );
-  // });
+// prHiFive.on("data", function() { 
+//   console.log('prHiFive');
+//   console.log( this.value );
+// });
 
-  // prNo.on("data", function() { 
-  //   console.log('prNo');
-  //   console.log( this.value );
-  // });
-  
-  // motion.on("motionstart", function() {      
-  //   console.log('111')
-  //   // board.wait(1500, function(){
-  //   //    motorHand.stop();
-  //   // });
-  // });  
+// prNo.on("data", function() { 
+//   console.log('prNo');
+//   console.log( this.value );
+// });
+// prSi.on("data", function() { 
+//   console.log('prSi');
+//   console.log( this.value );
+// });

@@ -174,7 +174,10 @@ function processResponse( data ){
 function socketEvents() {
     var socket = io.connect('http://localhost:' + 3000);
     // Validar conexión
-    socket.on('connect', function(data) { socket.emit('join', 'Client esta conectado!'); });
+    socket.on('connect', function(data) { 
+        console.log('Arduino Conectado!');
+        socket.emit('join', 'Client esta conectado!'); 
+    });
     // Activar microfono
     socket.on('escuchar', function(){        
         console.log('Escuchando');
