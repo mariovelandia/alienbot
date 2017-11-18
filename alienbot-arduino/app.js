@@ -70,7 +70,7 @@ board.on('ready', function() {
   }
   var indexEspected = 0;
   setInterval(function(){ 
-    // onLed(indexEspected); 
+    onLed(indexEspected); 
     if( indexEspected < 7 ){ indexEspected++; }
     else { indexEspected = 0 } 
   }, 200);   
@@ -82,12 +82,22 @@ board.on('ready', function() {
   }
 
   wantDecision();
-  leds.on();
+  // leds.on();
 
 
-  motion.on('motionstart',function() {
-    console.log('se movio');
-  });
+  // prHiFive.on("data", function() { 
+  //   console.log('prHiFive');
+  //   console.log( this.value );
+  // });
+
+  // prNo.on("data", function() { 
+  //   console.log('prNo');
+  //   console.log( this.value );
+  // });
+  // prSi.on("data", function() { 
+  //   console.log('prSi');
+  //   console.log( this.value );
+  // });
 
   // Listen to the web socket connection
   io.on('connection', function(client) {    
