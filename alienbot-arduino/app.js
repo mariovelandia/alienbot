@@ -29,7 +29,7 @@ board.on('ready', function() {
   var prSi = new five.Sensor({ pin: "A3", freq: 250 });  
   var prNo = new five.Sensor({ pin: "A5", freq: 250 });  
   var motion = new five.Motion(53);
-  var ledVerde = new five.Led(52);
+  var ledVerde = new five.Led(45);
   var ledRojo = new five.Led(47);
   var leds = new five.Leds([20,16,39,24,50,28]);
 
@@ -80,6 +80,10 @@ board.on('ready', function() {
     ledRojo.blink();
     pendienteDeEleccion = true;
   }
+
+  wantDecision();
+  leds.on();
+
 
   motion.on('motionstart',function() {
     console.log('se movio');
