@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body {
+  background-color: #192837;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 20px;
+  margin: 0;
+}
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  width: 80%;
+}
+#dialog-container {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+input {
+  background-color: #126077;
+  border: 1px solid #3F7F93;
+  color: #A6CAE6;
+  font-family: "Titillium Web";
+  font-size: 20px;
+  line-height: 43px;
+  padding: 0 0.75em;
+  width: 100%;
+  -webkit-transition: all 0.35s ease-in;
+}
+textarea {
+  background-color: #070F24;
+  border: 1px solid #122435;
+  color: #606B88;
+  padding: 0.5em;
+  width: 100%;
+  -webkit-transition: all 0.35s ease-in;
+}
+input:active, input:focus, textarea:active, textarea:focus {
+  outline: 1px solid #48788B;
+}
+.btn {
+  background-color: #126178;
+  border: 1px solid #549EAF;
+  color: #549EAF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Titillium Web";
+  font-size: 20px;
+  line-height: 43px;
+  padding: 0 0.75em;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-transition: all 0.35s ease-in;
+  margin: 10px 10px 10px 0;
+}
+.btn:hover {
+  background-color: #1888A9;
+  color: #183035;
+}
+.debug {
+  bottom: 0;
+  position: fixed;
+  right: 0;
+}
+.debug__content {
+  font-size: 14px;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.35s ease-in;
+}
+.debug__content.is-active {
+  display: block;
+  max-height: 500px;
+}
+.debug__btn {
+  width: 100%;
+}
+.spoken-response {
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.35s ease-in;
+}
+.spoken-response.is-active {
+  max-height: 400px;
+}
+.spoken-response__text {
+  background-color: #040E23;
+  color: #7584A2;
+  padding: 1em;
+  margin-top: 10px;
+}
+
+/* START Camara Styles */  
+.photo-app {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #040E23;
+}
+.photo-app .app{
+    width: 100%;
+    position: relative;
+}
+.photo-app .app #start-camera{
+    display: none;
+    border-radius: 3px;
+    max-width: 400px;
+    color: #fff;
+    background-color: #448AFF;
+    text-decoration: none;
+    padding: 15px;
+    opacity: 0.8;
+    margin: 50px auto;
+    text-align: center;
+}
+.photo-app .app video#camera-stream {
+    display: none;
+    width: 100%;
+}
+.app img#snap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: none;
+}
+.photo-app .app #error-message{
+    width: 100%;
+    background-color: #ccc;
+    color: #9b9b9b;
+    font-size: 28px;
+    padding: 200px 100px;
+    text-align: center;
+    display: none;
+}
+.photo-app .app .controls{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 30px;
+    display: none;
+}
+.photo-app .app .controls a{
+    border-radius: 50%;
+    color: #fff;
+    background-color: #111;
+    text-decoration: none;
+    padding: 15px;
+    line-height: 0;
+    opacity: 0.7;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.photo-app .app .controls a:hover{
+    opacity: 1;
+}
+.photo-app .app .controls a.disabled{
+    background-color: #555;
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+.photo-app .app .controls a.disabled:hover{
+    opacity: 0.5;
+}
+.photo-app .app .controls a i{
+    font-size: 18px;
+}
+.photo-app .app .controls #take-photo i{
+    font-size: 32px;
+}
+.photo-app .app canvas{
+    display: none;
+}
+.photo-app .app video#camera-stream.visible,
+.photo-app .app img#snap.visible,
+.photo-app .app #error-message.visible
+{
+    display: block;
+}
+.photo-app .app .controls.visible{
+    display: flex;
+}
+.photo-app h4 {
+  color: white;
+  line-height: 2px;
+}
+@media(max-width: 1000px){
+    .photo-app{
+        margin: 40px;
+    }
+    .photo-app .app #start-camera.visible{
+        display: block;
+    }
+    .photo-app .app .controls a i{
+        font-size: 16px;
+    }
+    .photo-app .app .controls #take-photo i{
+        font-size: 24px;
+    }
+}
+@media(max-width: 600px){
+    .photo-app{
+        margin: 10px;
+    }
+    .photo-app .app #error-message{
+        padding: 80px 50px;
+        font-size: 18px;
+    }
+    .photo-app .app .controls a i{
+        font-size: 12px;
+    }
+    .photo-app .app .controls #take-photo i{
+        font-size: 18px;
+    }
+}
+/* END Camara Styles*/
+.bold { 
+  font-weight: bold; 
+}
