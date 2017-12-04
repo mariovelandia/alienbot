@@ -131,7 +131,21 @@ function hideAllDivs() {
 }
 function mostrarGesto( gesto ) {
     // cuestionado / normal / pendinte / tierno / triste
+    var socket = io.connect('http://localhost:' + 3000);
     $('img.face').attr('src','includes/img/'+ gesto +'.png');
+    if (gesto == 'normal') {
+        socket.emit('none', '');
+        console.log('Gesto Normal');
+    } else if (gesto == 'feliz') {
+        socket.emit('happy', '');
+        console.log('Gesto Feliz');
+    } else if (gesto == 'triste') {
+        socket.emit('sad', '');
+        console.log('Gesto Triste');
+    } else if (gesto == 'enojado') {
+        socket.emit('mad', '');
+        console.log('Gesto Enojado');
+    }    
 }
 
 function imitateArtist(artist, data) {
@@ -151,26 +165,87 @@ function imitateArtist(artist, data) {
         $('#video-container').empty(); hideAllDivs();
         $('#dialog-container').slideDown();
         respond('¿Te Gustó?');
-        setTimeout(function() { prepareResponse(data); }, 1000);    
+        setTimeout(function() { prepareResponse(data); }, 1000);
+        setTimeout(function() {
+            mostrarGesto('normal');
+            $('.spoken-response__text').html('');
+            console.log('normal');
+        }, delay + 6500);
     }, 25000);
     
 }
 
+function endConversation(gesto, txt, delay) {
+    setTimeout(function() {
+        respond( txt );
+        mostrarGesto( gesto );
+    }, delay);
+    setTimeout(function() {
+        mostrarGesto('normal');
+        $('.spoken-response__text').html('');
+        console.log('normal');
+    }, delay + 6500);
+}
+
 function processResponse( data ){   
     var action = data.result.action;
-    var parameters = data.result.parameters;
-    // Imitar un artista
-    console.log( parameters.given_name );
+    var parameters = data.result.parameters;    
     if( action == 'general.greetings' && parameters.given_name != '' ){
         mostrarGesto('pendiente');
+        prepareResponse(data);        
+    } else if( action == 'app.comming-next' && parameters.tellme != '' ){
+        mostrarGesto('feliz');
         prepareResponse(data);
-        setTimeout(function() { takePhoto(); }, 1500);        
-    } else if( action == 'lineup.imitation' && parameters.stereopicnic_artistas != '' ){imitateArtist( parameters.stereopicnic_artistas, data );
+        endConversation('triste','¿No me vas a preguntar nada más humano?', 5000);
+    } else if ( action == 'app.activities' && parameters.decision != '' ) {
+        if (parameters.decision == 'Si') {
+            mostrarGesto('enojado');
+            respond('Caminar en exceso te hace flaco, más bien ve por tus tacos');
+            endConversation('enojado','¿Qué otra cosa quieres saber?',5000);
+        } else {
+            mostrarGesto('feliz');
+            respond('Recuerda que comer y no caminar ayuda a combatir la depresión y aún más, ve por unos tacos.');
+            endConversation('feliz','¿Qué otra cosa quieres saber?',7000);
+        }
+    } else if ( action == 'app.today-artists' ) {
+        mostrarGesto('feliz');
+        prepareResponse(data);
+        endConversation('feliz','Aunque a mi me gusta más la variedad de comida que hay en este planeta. Tu te ves de rechupete.', 8000);
+    } else if ( action == 'app.recomend-artist' && parameters.tellme != '' ) {
+        mostrarGesto('feliz');
+        prepareResponse(data);
+        endConversation('normal','¿Quieres saber otra cosa?', 5000);
+    } else if ( action == 'app.funfact' && parameters.artist != '' ) {
+        mostrarGesto('normal');
+        prepareResponse(data);
+        endConversation('feliz','También tienes que saber que hay más de 20 lugares para saciar el apetito … No te antoja un helado que se derrita lentamente en tu boca de mimos?', 9000);
+    } else if( action == 'app.imitation' && parameters.stereopicnic_artistas != '' ){
+        imitateArtist( parameters.stereopicnic_artistas, data );
+    } else if ( action == 'app.wc' ) {
+        if ( parameters.disculpas != '') {
+            mostrarGesto('normal');
+            prepareResponse(data);
+            endConversation('normal','¿Quieres saber otra cosa?', 5000);
+        } else {
+            mostrarGesto('enojado');
+            prepareResponse(data);
+        }
+    } else if ( action == 'app.foodcourt' ) {
+        mostrarGesto('feliz');
+        prepareResponse(data);
+        endConversation('feliz','Te invito a cenar conmigo hoy.', 5000);
+    } else if ( action == 'general.joke' ) {
+        mostrarGesto('feliz');
+        prepareResponse(data);
+        endConversation('enojado','¿Quieres saber algo más? pregunta menos y come más!', 11000);
+    } else if ( action == 'app.howami' ) {
+        mostrarGesto('normal');
+        respond('Que buena pregunta. Más de lo que piensas.')
+        setTimeout(function() { takePhoto(); }, 1500);
     } else {
         prepareResponse(data);
     }
 }
-
 function socketEvents() {
     var socket = io.connect('http://localhost:' + 3000);
     // Validar conexión
