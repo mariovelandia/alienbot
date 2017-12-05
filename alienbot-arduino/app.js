@@ -29,6 +29,8 @@ board.on('ready', function() {
     leds2: leds2,
   });
 
+  motor1.stop();
+
   // Gestos
   function gesto( tipo ) {    
     if( tipo == 'normal' ){ 
@@ -44,7 +46,7 @@ board.on('ready', function() {
     if( tipo == 'enojado' ){ 
       colorLeds1 = '#FF0000'; colorLeds2 = '#FF0000'; leds2.blink();
       leds1.color( colorLeds1 ); leds2.color( colorLeds2 );
-      setTimeout(function() { motor1.forward(170); }, 400);
+      setTimeout(function() { motor1.reverse(170); }, 400);
       setTimeout(function() { motor1.stop(); }, 4000);
     }
     if( tipo == 'triste' ){ 
